@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/test_db"
+    username: root
+    password: checkpoint2
+  kafka:
+    boot:
+      server: kafka:29092
+    topic:
+      name: items-update
+  server:
+    port: 8080

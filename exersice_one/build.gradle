@@ -1,0 +1,66 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'groovy'
+	id 'jacoco'
+}
+
+group = 'com.second_checkpoint'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.codehaus.groovy:groovy-all:3.0.3'
+	implementation "org.hibernate.validator:hibernate-validator:6.0.13.Final"
+	implementation 'org.postgresql:postgresql:42.2.18'
+	implementation "io.jsonwebtoken:jjwt-api:0.11.2"
+	implementation "io.jsonwebtoken:jjwt-impl:0.11.2"
+	implementation "io.jsonwebtoken:jjwt-jackson:0.11.2"
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+	testImplementation "org.spockframework:spock-core:2.0-M3-groovy-3.0"
+}
+
+jacoco {
+	toolVersion = "0.8.5"
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: ['com/second_checkpoint.exersice_one/config/', 'com/second_checkpoint.exersice_one/constant/',
+										'com/second_checkpoint.exersice_one/dto/', 'com/second_checkpoint.exersice_one/entity/', 'com/second_checkpoint.exersice_one/repository/',
+										'com/second_checkpoint.exersice_one/exception/', 'com/second_checkpoint.exersice_one/security/', 'com/second_checkpoint.exersice_one/util/'])
+		}))
+	}
+
+	reports {
+		html.required = true
+		html.outputLocation = layout.buildDirectory.dir('JacocoTestReportHtml')
+	}
+}

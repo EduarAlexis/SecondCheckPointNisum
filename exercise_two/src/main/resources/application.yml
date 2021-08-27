@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  kafka:
+    boot:
+      server: localhost:29092
+      topic:
+        name: items-update
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: checkpoint2
+    timeout: 60000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
